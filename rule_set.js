@@ -20,6 +20,16 @@ class RuleSet {
    */
   evaluate(candidate) {
 
+    if( this.operator === 'AND' ) {
+      // All must be true, so look for the first failing one
+      let failing_rule = this.rules.find(rule => !rule.evaluate(candidate));
+      return failing_rule ? false : true;
+    } else if( this.operator === 'OR' ) {
+      // Only one must be true, so look for first passing one
+      let passing_rule = this.rules.find(rule => rule.evaluate(candidate));
+      return passing_rule ? true : false;
+    }
+
   }
 
 }
