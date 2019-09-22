@@ -1,0 +1,15 @@
+{
+  "name": "rules-engine",
+  "description": "An engine for evaluating extremely custom rules",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash.at": "^4.6.0",
+    "mocha": "^6.2.0"
+  }
+}
