@@ -3,7 +3,7 @@ This repository contains logic for checking JSON objects against extremely custo
 
 ## Usage
 There are two ways to use these tools. One way is to import the `Rule` and `RuleSet` classes and to construct the rules manually.
-```json
+```
 const { RuleSet, Rule } = require("rules-engine");
 const rule_set = new RuleSet("AND", [
   new Rule("key", "=", 1),
@@ -13,7 +13,7 @@ const candidate = { "key": 1, "other_key": 2 };
 rule_set.evaluate(candidate); // = true
 ```
 The other way (not yet implemented) is to construct the desired rules in JSON, then pass that JSON into the rules parser.
-```json
+```
 const { RulesParser } = require("rules-engine");
 const rules_json = {
   "type": "rule_set",
