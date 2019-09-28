@@ -1,4 +1,5 @@
-const { at } = require('lodash.at');
+const at = require('lodash.at');
+const isEqual = require("lodash.isEqual");
 
 /**
  * This class evaluates a single rule
@@ -24,7 +25,7 @@ class Rule {
    */
   evaluate(candidate) {
 
-    switch(this.operator) {
+    switch(this.comparison) {
       case '>':
       case 'gt':
         break;
@@ -40,13 +41,38 @@ class Rule {
       case '<=':
       case 'lte':
         break;
+
+      case '!=':
+      case 'ne':
+        if (typeof this.target_value == 'object') {
+          return !isEqual(this.getDatum(candidate), this.target_value);
+        } else {
+          return this.getDatum(candidate) !== this.target_value;
+        }
+        
       
       case '=':
       case 'eq':
       default:
-        break;
+        if (typeof this.target_value == 'object') {
+          return isEqual(this.getDatum(candidate), this.target_value);
+        } else {
+          return this.getDatum(candidate) === this.target_value;
+        }
+          
     }
 
+  }
+
+  /**
+   * Gets the datum to be compared from this.path in the candidate
+   * @param {Object} candidate
+   * @returns {Any} 
+   */
+  getDatum(candidate) {
+    return candidate[ this.path ];
+    // At returns array, we want single value
+    // return at(candidate, [this.path])[0];
   }
 
 }

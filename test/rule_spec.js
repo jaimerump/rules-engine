@@ -1,32 +1,56 @@
+const Rule = require('../rule');
+const chai = require("chai");
+const expect = chai.expect;
+
 describe("Rule", () => {
 
   describe(".evaluate", () => {
 
     context("when the operator is =", () => {
 
-      it("also accepts eq");
+      it("also accepts eq", () => {
+        const rule = new Rule("key", "eq", 1);
+        const candidate = { key: 1 };
+        expect(rule.evaluate(candidate)).to.be.true;
+      });
 
       context("and the values are equal primitives", () => {
 
-        it("evaluates true");
+        it("evaluates true", () => {
+          const rule = new Rule('key', '=', 1);
+          const candidate = { key: 1 };
+          expect(rule.evaluate(candidate)).to.be.true;
+        });
 
       });
 
       context("and the values are non-equal primitives", () => {
 
-        it("evaluates false");
+        it("evaluates false", () => {
+          const rule = new Rule("key", "=", 1);
+          const candidate = { key: 2 };
+          expect(rule.evaluate(candidate)).to.be.false;
+        });
 
       });
 
       context("and the values are deeply equal objects", () => {
 
-        it("evaluates true");
+        it("evaluates true", () => {
+          const rule = new Rule("key", "=", { test: '1' });
+          const candidate = { key: { test: '1' } };
+          expect(rule.evaluate(candidate)).to.be.true;
+        });
 
       });
 
       context("and the values are non-equal objects", () => {
 
-        it("evaluates false");
+        it("evaluates false", () => {
+          const rule = new Rule("key", "=", { test: "1" });
+          const candidate = { key: { test: "2" } };
+          expect(rule.evaluate(candidate)).to.be.false;
+        });
 
       });
 
@@ -34,29 +58,49 @@ describe("Rule", () => {
 
     context("when the operator is !=", () => {
 
-      it("also accepts ne");
+      it("also accepts ne", () => {
+        const rule = new Rule("key", "ne", 1);
+        const candidate = { key: 2 };
+        expect(rule.evaluate(candidate)).to.be.true;
+      });
 
       context("and the values are equal primitives", () => {
 
-        it("evaluates false");
+        it("evaluates false", () => {
+          const rule = new Rule("key", "!=", 1);
+          const candidate = { key: 1 };
+          expect(rule.evaluate(candidate)).to.be.false;
+        });
 
       });
 
       context("and the values are non-equal primitives", () => {
 
-        it("evaluates true");
+        it("evaluates true", () => {
+          const rule = new Rule("key", "!=", 1);
+          const candidate = { key: 2 };
+          expect(rule.evaluate(candidate)).to.be.true;
+        });
 
       });
 
       context("and the values are deeply equal objects", () => {
 
-        it("evaluates false");
+        it("evaluates false", () => {
+          const rule = new Rule("key", "!=", { test: "1" });
+          const candidate = { key: { test: "1" } };
+          expect(rule.evaluate(candidate)).to.be.false;
+        });
 
       });
 
       context("and the values are non-equal objects", () => {
 
-        it("evaluates true");
+        it("evaluates true", () => {
+          const rule = new Rule("key", "!=", { test: "1" });
+          const candidate = { key: { test: "2" } };
+          expect(rule.evaluate(candidate)).to.be.true;
+        });
 
       });
 
