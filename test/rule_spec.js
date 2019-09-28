@@ -4,6 +4,8 @@ const expect = chai.expect;
 
 describe("Rule", () => {
 
+  const TYPE_ERROR = "Argument must be numeric or string";
+
   describe(".evaluate", () => {
 
     context("when the operator is =", () => {
@@ -108,25 +110,41 @@ describe("Rule", () => {
 
     context("when the operator is >", () => {
 
-      it("also accepts gt");
+      it("also accepts gt", () => {
+        const rule = new Rule("key", "gt", 1);
+        const candidate = { key: 2 };
+        expect(rule.evaluate(candidate)).to.be.true;
+      });
 
       context("when the candidate is a string", () => {
 
         context("and it is after the target in alphabetical order", () => {
 
-          it("evaluates true");
+          it("evaluates true", () => {
+            const rule = new Rule("key", ">", "a");
+            const candidate = { key: "b" };
+            expect(rule.evaluate(candidate)).to.be.true;
+          });
 
         });
 
         context("and it is before the target in alphabetical order", () => {
 
-          it("evaluates false");
+          it("evaluates false", () => {
+            const rule = new Rule("key", ">", "b");
+            const candidate = { key: "a" };
+            expect(rule.evaluate(candidate)).to.be.false;
+          });
 
         });
 
         context("and it equals the target", () => {
 
-          it("evaluates false");
+          it("evaluates false", () => {
+            const rule = new Rule("key", ">", "a");
+            const candidate = { key: "a" };
+            expect(rule.evaluate(candidate)).to.be.false;
+          });
 
         });
 
@@ -136,19 +154,31 @@ describe("Rule", () => {
 
         context("and it is greater than the target", () => {
 
-          it("evaluates true");
+          it("evaluates true", () => {
+            const rule = new Rule("key", ">", 1);
+            const candidate = { key: 2 };
+            expect(rule.evaluate(candidate)).to.be.true;
+          });
 
         });
 
         context("and it is less than the target", () => {
 
-          it("evaluates false");
+          it("evaluates false", () => {
+            const rule = new Rule("key", ">", 1);
+            const candidate = { key: 0 };
+            expect(rule.evaluate(candidate)).to.be.false;
+          });
 
         });
 
         context("and it equals the target", () => {
 
-          it("evaluates false");
+          it("evaluates false", () => {
+            const rule = new Rule("key", ">", 1);
+            const candidate = { key: 1 };
+            expect(rule.evaluate(candidate)).to.be.false;
+          });
 
         });
 
@@ -156,7 +186,13 @@ describe("Rule", () => {
 
       context("when the candidate is not string or numeric", () => {
 
-        it("throws a type error");
+        it("throws a type error", () => {
+          const rule = new Rule("key", ">", 1);
+          const candidate = { key: [2] };
+          expect(() => {
+            rule.evaluate(candidate);
+          }).to.throw(TYPE_ERROR);
+        });
 
       });
 
@@ -164,25 +200,41 @@ describe("Rule", () => {
 
     context("when the operator is >=", () => {
 
-      it("also accepts gte");
+      it("also accepts gte", () => {
+        const rule = new Rule("key", "gte", 1);
+        const candidate = { key: 2 };
+        expect(rule.evaluate(candidate)).to.be.true;
+      });
 
       context("when the candidate is a string", () => {
 
         context("and it is after the target in alphabetical order", () => {
 
-          it("evaluates true");
+          it("evaluates true", () => {
+            const rule = new Rule("key", ">=", "a");
+            const candidate = { key: "b" };
+            expect(rule.evaluate(candidate)).to.be.true;
+          });
 
         });
 
         context("and it is before the target in alphabetical order", () => {
 
-          it("evaluates false");
+          it("evaluates false", () => {
+            const rule = new Rule("key", ">=", "b");
+            const candidate = { key: "a" };
+            expect(rule.evaluate(candidate)).to.be.false;
+          });
 
         });
 
         context("and it equals the target", () => {
 
-          it("evaluates true");
+          it("evaluates true", () => {
+            const rule = new Rule("key", ">=", "a");
+            const candidate = { key: "a" };
+            expect(rule.evaluate(candidate)).to.be.true;
+          });
 
         });
 
@@ -192,19 +244,31 @@ describe("Rule", () => {
 
         context("and it is greater than the target", () => {
 
-          it("evaluates true");
+          it("evaluates true", () => {
+            const rule = new Rule("key", ">=", 1);
+            const candidate = { key: 2 };
+            expect(rule.evaluate(candidate)).to.be.true;
+          });
 
         });
 
         context("and it is less than the target", () => {
 
-          it("evaluates false");
+          it("evaluates false", () => {
+            const rule = new Rule("key", ">=", 1);
+            const candidate = { key: 0 };
+            expect(rule.evaluate(candidate)).to.be.false;
+          });
 
         });
 
         context("and it equals the target", () => {
 
-          it("evaluates true");
+          it("evaluates true", () => {
+            const rule = new Rule("key", ">=", 1);
+            const candidate = { key: 1 };
+            expect(rule.evaluate(candidate)).to.be.true;
+          });
 
         });
 
@@ -212,7 +276,13 @@ describe("Rule", () => {
 
       context("when the candidate is not string or numeric", () => {
 
-        it("throws a type error");
+        it("throws a type error", () => {
+          const rule = new Rule("key", ">=", 1);
+          const candidate = { key: [2] };
+          expect(() => {
+            rule.evaluate(candidate);
+          }).to.throw(TYPE_ERROR);
+        });
 
       });
 
@@ -220,25 +290,41 @@ describe("Rule", () => {
 
     context("when the operator is <", () => {
 
-      it("also accepts lt");
+      it("also accepts lt", () => {
+        const rule = new Rule("key", "lt", 1);
+        const candidate = { key: 0 };
+        expect(rule.evaluate(candidate)).to.be.true;
+      });
 
       context("when the candidate is a string", () => {
 
         context("and it is after the target in alphabetical order", () => {
 
-          it("evaluates false");
+          it("evaluates false", () => {
+            const rule = new Rule("key", "<", "a");
+            const candidate = { key: "b" };
+            expect(rule.evaluate(candidate)).to.be.false;
+          });
 
         });
 
         context("and it is before the target in alphabetical order", () => {
 
-          it("evaluates true");
+          it("evaluates true", () => {
+            const rule = new Rule("key", "<", "b");
+            const candidate = { key: "a" };
+            expect(rule.evaluate(candidate)).to.be.true;
+          });
 
         });
 
         context("and it equals the target", () => {
 
-          it("evaluates false");
+          it("evaluates false", () => {
+            const rule = new Rule("key", "<", "a");
+            const candidate = { key: "a" };
+            expect(rule.evaluate(candidate)).to.be.false;
+          });
 
         });
 
@@ -248,19 +334,31 @@ describe("Rule", () => {
 
         context("and it is greater than the target", () => {
 
-          it("evaluates false");
+          it("evaluates false", () => {
+            const rule = new Rule("key", "<", 1);
+            const candidate = { key: 2 };
+            expect(rule.evaluate(candidate)).to.be.false;
+          });
 
         });
 
         context("and it is less than the target", () => {
 
-          it("evaluates true");
+          it("evaluates true", () => {
+            const rule = new Rule("key", "<", 1);
+            const candidate = { key: 0 };
+            expect(rule.evaluate(candidate)).to.be.true;
+          });
 
         });
 
         context("and it equals the target", () => {
 
-          it("evaluates false");
+          it("evaluates false", () => {
+            const rule = new Rule("key", "<", 1);
+            const candidate = { key: 1 };
+            expect(rule.evaluate(candidate)).to.be.false;
+          });
 
         });
 
@@ -268,7 +366,13 @@ describe("Rule", () => {
 
       context("when the candidate is not string or numeric", () => {
 
-        it("throws a type error");
+        it("throws a type error", () => {
+          const rule = new Rule("key", "<", 1);
+          const candidate = { key: [2] };
+          expect(() => {
+            rule.evaluate(candidate);
+          }).to.throw(TYPE_ERROR);
+        });
 
       });
 
@@ -276,25 +380,41 @@ describe("Rule", () => {
 
     context("when the operator is <=", () => {
 
-      it("also accepts lte");
+      it("also accepts lte", () => {
+        const rule = new Rule("key", "lte", 1);
+        const candidate = { key: 0 };
+        expect(rule.evaluate(candidate)).to.be.true;
+      });
 
       context("when the candidate is a string", () => {
 
         context("and it is after the target in alphabetical order", () => {
 
-          it("evaluates false");
+          it("evaluates false", () => {
+            const rule = new Rule("key", "<=", "a");
+            const candidate = { key: "b" };
+            expect(rule.evaluate(candidate)).to.be.false;
+          });
 
         });
 
         context("and it is before the target in alphabetical order", () => {
 
-          it("evaluates true");
+          it("evaluates true", () => {
+            const rule = new Rule("key", "<=", "b");
+            const candidate = { key: "a" };
+            expect(rule.evaluate(candidate)).to.be.true;
+          });
 
         });
 
         context("and it equals the target", () => {
 
-          it("evaluates true");
+          it("evaluates true", () => {
+            const rule = new Rule("key", "<=", "a");
+            const candidate = { key: "a" };
+            expect(rule.evaluate(candidate)).to.be.true;
+          });
 
         });
 
@@ -304,19 +424,31 @@ describe("Rule", () => {
 
         context("and it is greater than the target", () => {
 
-          it("evaluates false");
+          it("evaluates false", () => {
+            const rule = new Rule("key", "<=", 1);
+            const candidate = { key: 2 };
+            expect(rule.evaluate(candidate)).to.be.false;
+          });
 
         });
 
         context("and it is less than the target", () => {
 
-          it("evaluates true");
+          it("evaluates true", () => {
+            const rule = new Rule("key", "<=", 1);
+            const candidate = { key: 0 };
+            expect(rule.evaluate(candidate)).to.be.true;
+          });
 
         });
 
         context("and it equals the target", () => {
 
-          it("evaluates true");
+          it("evaluates true", () => {
+            const rule = new Rule("key", "<=", 1);
+            const candidate = { key: 1 };
+            expect(rule.evaluate(candidate)).to.be.true;
+          });
 
         });
 
@@ -324,7 +456,13 @@ describe("Rule", () => {
 
       context("when the candidate is not string or numeric", () => {
 
-        it("throws a type error");
+        it("throws a type error", () => {
+          const rule = new Rule("key", "<=", 1);
+          const candidate = { key: [2] };
+          expect(() => {
+            rule.evaluate(candidate);
+          }).to.throw(TYPE_ERROR);
+        });
 
       });
 

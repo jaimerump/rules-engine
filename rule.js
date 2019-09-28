@@ -25,29 +25,47 @@ class Rule {
    */
   evaluate(candidate) {
 
+    const datum = this.getDatum(candidate);
+
     switch(this.comparison) {
       case '>':
       case 'gt':
-        break;
+        if( ['string', 'number'].includes(typeof datum) ) {
+          return datum > this.target_value;
+        } else {
+          throw Error("Argument must be numeric or string");
+        }
 
       case '>=':
       case 'gte':
-        break;
+        if( ['string', 'number'].includes(typeof datum) ) {
+          return datum >= this.target_value;
+        } else {
+          throw Error("Argument must be numeric or string");
+        }
 
       case '<':
       case 'lt':
-        break;
+        if( ['string', 'number'].includes(typeof datum) ) {
+          return datum < this.target_value;
+        } else {
+          throw Error("Argument must be numeric or string");
+        }
 
       case '<=':
       case 'lte':
-        break;
+        if( ['string', 'number'].includes(typeof datum) ) {
+          return datum <= this.target_value;
+        } else {
+          throw Error("Argument must be numeric or string");
+        }
 
       case '!=':
       case 'ne':
         if (typeof this.target_value == 'object') {
-          return !isEqual(this.getDatum(candidate), this.target_value);
+          return !isEqual(datum, this.target_value);
         } else {
-          return this.getDatum(candidate) !== this.target_value;
+          return datum !== this.target_value;
         }
         
       
@@ -55,9 +73,9 @@ class Rule {
       case 'eq':
       default:
         if (typeof this.target_value == 'object') {
-          return isEqual(this.getDatum(candidate), this.target_value);
+          return isEqual(datum, this.target_value);
         } else {
-          return this.getDatum(candidate) === this.target_value;
+          return datum === this.target_value;
         }
           
     }
