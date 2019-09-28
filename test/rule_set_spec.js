@@ -71,6 +71,19 @@ describe("Rule Set", () => {
 
     });
 
+    it("allows nested rulesets", () => {
+      const rule_set = new RuleSet("OR", [
+        new Rule("key", "=", 1),
+        new RuleSet("AND", [
+          new Rule("second_key", "=", 2),
+          new Rule("third_key", '=', 3)
+        ])
+      ]);
+      const candidate = { key: 2, second_key: 2, third_key: 3 };
+
+      expect(rule_set.evaluate(candidate)).to.be.true;
+    });
+
   });
 
 });
