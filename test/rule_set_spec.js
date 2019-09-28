@@ -1,3 +1,8 @@
+const RuleSet = require('../rule_set');
+const Rule = require("../rule");
+const chai = require("chai");
+const expect = chai.expect;
+
 describe("Rule Set", () => {
 
   describe(".evaluate", () => {
@@ -6,13 +11,29 @@ describe("Rule Set", () => {
 
       context("and every rule evaluates to true", () => {
 
-        it("evaluates as true");
+        it("evaluates as true", () => {
+          const rule_set = new RuleSet("AND", [
+            new Rule("key", "=", 1),
+            new Rule("key", "=", 1)
+          ]);
+          const candidate = { key: 1 };
+
+          expect(rule_set.evaluate(candidate)).to.be.true;
+        });
 
       });
 
       context("and any rule evaluates to false", () => {
 
-        it("evaluates as false");
+        it("evaluates as false", () => {
+          const rule_set = new RuleSet('AND', [
+            new Rule('key', '=', 1),
+            new Rule('key', '=', 2)
+          ]);
+          const candidate = { key: 1 };
+          
+          expect(rule_set.evaluate(candidate)).to.be.false;
+        });
 
       });
 
@@ -22,13 +43,29 @@ describe("Rule Set", () => {
 
       context("and every rule evaluates to false", () => {
 
-        it("evaluates as false");
+        it("evaluates as false", () => {
+          const rule_set = new RuleSet("OR", [
+            new Rule("key", "=", 1),
+            new Rule("key", "=", 2)
+          ]);
+          const candidate = { key: 3 };
+
+          expect(rule_set.evaluate(candidate)).to.be.false;
+        });
 
       });
 
       context("and any rule evaluates to true", () => {
 
-        it("evaluates as true");
+        it("evaluates as true", () => {
+          const rule_set = new RuleSet('OR', [
+            new Rule('key', '=', 1),
+            new Rule('key', '=', 2)
+          ]);
+          const candidate = { key: 1 };
+          
+          expect(rule_set.evaluate(candidate)).to.be.true;
+        });
 
       });
 
