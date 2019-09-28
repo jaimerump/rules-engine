@@ -28,6 +28,9 @@ class Rule {
     const datum = this.getDatum(candidate);
 
     switch(this.comparison) {
+      
+      /* Arithmetic comparisons */
+
       case '>':
       case 'gt':
         if( ['string', 'number'].includes(typeof datum) ) {
@@ -71,12 +74,48 @@ class Rule {
       
       case '=':
       case 'eq':
-      default:
         if (typeof this.target_value == 'object') {
           return isEqual(datum, this.target_value);
         } else {
           return datum === this.target_value;
         }
+
+      /* Array comparisons */
+
+      case 'INCLUDE':
+      case 'INCLUDE_ANY':
+        if (Array.isArray(datum)) {
+          // Find any one that matches
+          const matching_element = this.target_value.find(element => datum.includes(element));
+          return !!matching_element;
+        } else {
+          // Check if datum is any of the expected
+          return this.target_value.includes(datum);
+        }
+
+      case 'REQUIRE':
+      case 'REQUIRE_ALL':
+        if (Array.isArray(datum)) {
+          // Make sure none are missing
+          const missing_element = this.target_value.find(element => !datum.includes(element));
+          return !missing_element;
+        } else {
+          throw Error("REQUIRE filter requires an array datum");
+        }
+
+      case 'EXCLUDE':
+      case 'EXCLUDE_ANY':
+        if (Array.isArray(datum)) {
+          // Reject if any element matches
+          const matching_element = this.target_value.find(element => datum.includes(element));
+          return !matching_element;
+        } else {
+          // Reject if the datum matches
+          return !this.target_value.includes(datum);
+        }
+
+      default:
+        return false;
           
     }
 
