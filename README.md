@@ -41,8 +41,8 @@ rule_set.evaluate(candidate); // = true
 The two core components are Rules and Rule Sets. Rules check a property of the candidate object (specified by the `path` parameter) against a desired target value (specified by the `target_value` parameter). The logic of the comparison is represented by the `comparison` and the valid values are:
 * = or eq: Checks that the data at `path` is deeply equal to `target_value`
 * != or ne: Checks that the data at `path` is not deeply equal to `target_value`
-* > or gt: Checks that the data at `path` is greater than (or later in alphabetical order) than `target_value`
-* >= or gte: Checks that the data at `path` is greater than or equal (or later in alphabetical order) than `target_value`
+* \> or gt: Checks that the data at `path` is greater than (or later in alphabetical order) than `target_value`
+* \>= or gte: Checks that the data at `path` is greater than or equal (or later in alphabetical order) than `target_value`
 * < or lt: Checks that the data at `path` is less than (or earlier in alphabetical order) than `target_value`
 * <= or lte: Checks that the data at `path` is less than or equal (or later in alphabetical order) than `target_value`
 * INCLUDE: `target_value` must be an array. The rule evaluates true if any of the target values match the data at `path`
