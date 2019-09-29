@@ -49,8 +49,20 @@ The two core components are Rules and Rule Sets. Rules check a property of the c
 * REQUIRE: `target_value` and the data at `path` must both be arrays. The rule evaluates true only if all of the target values are in the array at `path`
 * EXCLUDE: `target_value` must be an array. The rule evaluates false if any of the target values match the data at `path`
 
-Rule Sets join multiple rules together with either an AND (all of the child Rules must evaluate true) or an OR (only one must evaluate true). Rule Sets can also contain other Rule Sets, allowing complex boolean logic trees to be constructed from them.
-
+Rule Sets join multiple rules together with either an AND (all of the child Rules must evaluate true) or an OR (only one must evaluate true). Rule Sets can also contain other Rule Sets, allowing complex boolean logic trees to be constructed from them. For instance:
+```
+const { RuleSet, Rule } = require("rules-engine");
+const rule_set = new RuleSet("OR", [
+  new RuleSet("AND", [
+    new Rule("geo", "=", "Cincinnati"),
+    new Rule("interests", "INCLUDE", "tennis"),
+  ]),
+  new RuleSet("AND", [
+    new Rule("geo", "=", "Dayton"),
+    new Rule("interests", "INCLUDE", "football"),
+  ])
+]);
+```
 
 ## Todo
 * The basic rules are implemented and tested, but I still need to implement a parser to parse JSON rules into rule objects that can be evaluated. 
