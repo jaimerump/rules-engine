@@ -1,5 +1,5 @@
 const RuleSet = require('../rule_set');
-const Rule = require("../rule");
+const Comparison = require("../comparison");
 const chai = require("chai");
 const expect = chai.expect;
 
@@ -13,8 +13,8 @@ describe("Rule Set", () => {
 
         it("evaluates as true", () => {
           const rule_set = new RuleSet("AND", [
-            new Rule("key", "=", 1),
-            new Rule("key", "=", 1)
+            new Comparison("key", "=", 1),
+            new Comparison("key", "=", 1)
           ]);
           const candidate = { key: 1 };
 
@@ -27,8 +27,8 @@ describe("Rule Set", () => {
 
         it("evaluates as false", () => {
           const rule_set = new RuleSet('AND', [
-            new Rule('key', '=', 1),
-            new Rule('key', '=', 2)
+            new Comparison('key', '=', 1),
+            new Comparison('key', '=', 2)
           ]);
           const candidate = { key: 1 };
           
@@ -45,8 +45,8 @@ describe("Rule Set", () => {
 
         it("evaluates as false", () => {
           const rule_set = new RuleSet("OR", [
-            new Rule("key", "=", 1),
-            new Rule("key", "=", 2)
+            new Comparison("key", "=", 1),
+            new Comparison("key", "=", 2)
           ]);
           const candidate = { key: 3 };
 
@@ -59,8 +59,8 @@ describe("Rule Set", () => {
 
         it("evaluates as true", () => {
           const rule_set = new RuleSet('OR', [
-            new Rule('key', '=', 1),
-            new Rule('key', '=', 2)
+            new Comparison('key', '=', 1),
+            new Comparison('key', '=', 2)
           ]);
           const candidate = { key: 1 };
           
@@ -73,10 +73,10 @@ describe("Rule Set", () => {
 
     it("allows nested rulesets", () => {
       const rule_set = new RuleSet("OR", [
-        new Rule("key", "=", 1),
+        new Comparison("key", "=", 1),
         new RuleSet("AND", [
-          new Rule("second_key", "=", 2),
-          new Rule("third_key", '=', 3)
+          new Comparison("second_key", "=", 2),
+          new Comparison("third_key", '=', 3)
         ])
       ]);
       const candidate = { key: 2, second_key: 2, third_key: 3 };

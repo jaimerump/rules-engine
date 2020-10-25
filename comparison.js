@@ -2,24 +2,24 @@ const at = require('lodash.at');
 const isEqual = require("lodash.isEqual");
 
 /**
- * This class evaluates a single rule
+ * This class evaluates a single comparison
  */
-class Rule {
+class Comparison {
 
   /**
    * 
    * @param {String} path The path of the data to dig out of the object
-   * @param {String} comparison The comparison to run
+   * @param {String} operator The comparison to run
    * @param {Any} target_value The target value to compare to
    */
-  constructor(path, comparison, target_value) {
+  constructor(path, operator, target_value) {
     this.path = path;
-    this.comparison = comparison;
+    this.operator = operator;
     this.target_value = target_value;
   }
 
   /**
-   * Evaluates the given object against the rule
+   * Evaluates the given object against the Comparison
    * @param {Object} candidate 
    * @returns {Boolean}
    */
@@ -27,9 +27,9 @@ class Rule {
 
     const datum = this.getDatum(candidate);
 
-    switch(this.comparison) {
+    switch(this.operator) {
       
-      /* Arithmetic comparisons */
+      /* Arithmetic operators */
 
       case '>':
       case 'gt':
@@ -80,7 +80,7 @@ class Rule {
           return datum === this.target_value;
         }
 
-      /* Array comparisons */
+      /* Array operators */
 
       case 'INCLUDE':
       case 'INCLUDE_ANY':
@@ -134,4 +134,4 @@ class Rule {
 
 }
 
-module.exports = Rule;
+module.exports = Comparison;

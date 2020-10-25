@@ -1,16 +1,16 @@
 /**
- * This class evaluates a set of rules
+ * This class evaluates a set of comparisons
  */
 class RuleSet {
 
   /**
    * 
    * @param {String} operator "OR" or "AND"
-   * @param {Array<Rule>} rules 
+   * @param {Array<Comparison>} comparisons 
    */
-  constructor(operator, rules) {
+  constructor(operator, comparisons) {
     this.operator = operator;
-    this.rules = rules;
+    this.comparisons = comparisons;
   }
 
   /**
@@ -22,11 +22,11 @@ class RuleSet {
 
     if( this.operator === 'AND' ) {
       // All must be true, so look for the first failing one
-      let failing_rule = this.rules.find(rule => !rule.evaluate(candidate));
+      let failing_rule = this.comparisons.find(rule => !rule.evaluate(candidate));
       return failing_rule ? false : true;
     } else if( this.operator === 'OR' ) {
       // Only one must be true, so look for first passing one
-      let passing_rule = this.rules.find(rule => rule.evaluate(candidate));
+      let passing_rule = this.comparisons.find(rule => rule.evaluate(candidate));
       return passing_rule ? true : false;
     }
 

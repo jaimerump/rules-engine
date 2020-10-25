@@ -51,15 +51,15 @@ The two core components are Rules and Rule Sets. Rules check a property of the c
 
 Rule Sets join multiple rules together with either an AND (all of the child Rules must evaluate true) or an OR (only one must evaluate true). Rule Sets can also contain other Rule Sets, allowing complex boolean logic trees to be constructed from them. For instance:
 ```
-const { RuleSet, Rule } = require("rules-engine");
+const { RuleSet, Comparison } = require("rules-engine");
 const rule_set = new RuleSet("OR", [
   new RuleSet("AND", [
-    new Rule("geo", "=", "Cincinnati"),
-    new Rule("interests", "INCLUDE", "tennis"),
+    new Comparison("geo", "=", "Cincinnati"),
+    new Comparison("interests", "INCLUDE", "tennis"),
   ]),
   new RuleSet("AND", [
-    new Rule("geo", "=", "Dayton"),
-    new Rule("interests", "INCLUDE", "football"),
+    new Comparison("geo", "=", "Dayton"),
+    new Comparison("interests", "INCLUDE", "football"),
   ])
 ]);
 ```

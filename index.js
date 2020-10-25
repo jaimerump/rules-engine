@@ -2,6 +2,7 @@
  * Import other modules
  */
 module.exports = {
-  Rule: require("./rule"),
-  RuleSet: require("./rule_set")
+  Comparison: require("./comparison"),
+  RuleSet: require("./rule_set"),
+  RulesParser: require("./rules_parser")
 };
