@@ -1,4 +1,4 @@
-const Comparison = require('../comparison');
+const Comparison = require('../src/comparison');
 const chai = require("chai");
 const expect = chai.expect;
 
