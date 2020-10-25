@@ -12,7 +12,7 @@ const conjunction = new Conjunction("AND", [
 const candidate = { "key": 1, "other_key": 2 };
 conjunction.evaluate(candidate); // = true
 ```
-The other way (not yet implemented) is to construct the desired rules in JSON, then pass that JSON into the rules parser.
+The other way is to construct the desired rules in JSON, then pass that JSON into the rules parser.
 ```
 const { RulesParser } = require("rules-engine");
 const rules_json = {
@@ -38,7 +38,7 @@ const candidate = { "key": 1, "other_key": 2 };
 conjunction.evaluate(candidate); // = true
 ```
 
-The two core components are Rules and Rule Sets. Rules check a property of the candidate object (specified by the `path` parameter) against a desired target value (specified by the `target_value` parameter). The logic of the comparison is represented by the `comparison` and the valid values are:
+The two core components are Comparisons and Conjunctions. Comparisons check a property of the candidate object (specified by the `path` parameter) against a desired target value (specified by the `target_value` parameter). The logic of the comparison is represented by the `comparison` and the valid values are:
 * = or eq: Checks that the data at `path` is deeply equal to `target_value`
 * != or ne: Checks that the data at `path` is not deeply equal to `target_value`
 * \> or gt: Checks that the data at `path` is greater than (or later in alphabetical order) than `target_value`
@@ -65,7 +65,6 @@ const conjunction = new Conjunction("OR", [
 ```
 
 ## Todo
-* The basic logic is implemented and tested, but I still need to implement a parser to parse JSON rules into objects that can be evaluated. 
 * I need to implement validation to make sure that rules aren't created with invalid target values. 
 * The path logic right now only checks a single key, but it will need to be able to recursively check multiple keys. That includes broadcasting across arrays and potentially invoking functions in the path.
 * The user should be able to specify getter functions for both the datum and the target. That would allow comparisons against dynamic values.
@@ -73,4 +72,4 @@ const conjunction = new Conjunction("OR", [
 * I want to add more complex operators (NOT, NAND/NOR, XOR)
 
 ## Caveats
-These tools require all of the data needed for the checks to be present in a single data structure. It also cannot express dynamic target values, such as "two days ago". The only way to implement a dynamic threshold would be to add a key to the data structure such as `days_ago`, then add a rule like `new Rule("days_ago", ">=", 2)`.
+These tools require all of the data needed for the checks to be present in a single data structure. It also cannot express dynamic target values, such as "two days ago". The only way to implement a dynamic threshold would be to add a key to the data structure such as `days_ago`, then add a rule like `new Comparison("days_ago", ">=", 2)`.

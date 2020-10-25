@@ -8,7 +8,18 @@ const Comparison = require("./comparison");
 class RulesParser {
 
   static parse(json) {
-
+    if(json.type.toLowerCase() == "conjunction") {
+      return new Conjunction(
+        json.operator,
+        json.evaluatables.map(RulesParser.parse)
+      );
+    } else {
+      return new Comparison(
+        json.path,
+        json.operator,
+        json.target_value
+      );
+    }
   }
 
 };
