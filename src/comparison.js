@@ -1,10 +1,11 @@
 const at = require('lodash.at');
 const isEqual = require("lodash.isEqual");
+const Evaluatable = require("./evaluatable");
 
 /**
  * This class evaluates a single comparison
  */
-class Comparison {
+class Comparison extends Evaluatable {
 
   /**
    * 
@@ -13,6 +14,7 @@ class Comparison {
    * @param {Any} target_value The target value to compare to
    */
   constructor(path, operator, target_value) {
+    super();
     this.path = path;
     this.operator = operator;
     this.target_value = target_value;

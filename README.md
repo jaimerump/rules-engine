@@ -71,7 +71,6 @@ const conjunction = new Conjunction("OR", [
 * The user should be able to specify getter functions for both the datum and the target. That would allow comparisons against dynamic values.
 * I need a way to specify databased lists of values, so they can be shared across multiple rules.
 * I want to add more complex operators (NOT, NAND/NOR, XOR)
-* Allow Conjunctions under Conjunctions and mixed-depth trees
 
 ## Caveats
 These tools require all of the data needed for the checks to be present in a single data structure. It also cannot express dynamic target values, such as "two days ago". The only way to implement a dynamic threshold would be to add a key to the data structure such as `days_ago`, then add a rule like `new Rule("days_ago", ">=", 2)`.

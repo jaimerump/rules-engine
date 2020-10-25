@@ -1,16 +1,19 @@
+const Evaluatable = require("./evaluatable");
+
 /**
- * This class evaluates a set of comparisons
+ * This class evaluates a set of evaluatable objects
  */
-class Conjunction {
+class Conjunction extends Evaluatable {
 
   /**
    * 
    * @param {String} operator "OR" or "AND"
-   * @param {Array<Comparison>} comparisons 
+   * @param {Array<Evaluatable>} evaluatables 
    */
-  constructor(operator, comparisons) {
+  constructor(operator, evaluatables) {
+    super();
     this.operator = operator;
-    this.comparisons = comparisons;
+    this.evaluatables = evaluatables;
   }
 
   /**
@@ -22,11 +25,11 @@ class Conjunction {
 
     if( this.operator === 'AND' ) {
       // All must be true, so look for the first failing one
-      let failing_rule = this.comparisons.find(rule => !rule.evaluate(candidate));
+      let failing_rule = this.evaluatables.find(rule => !rule.evaluate(candidate));
       return failing_rule ? false : true;
     } else if( this.operator === 'OR' ) {
       // Only one must be true, so look for first passing one
-      let passing_rule = this.comparisons.find(rule => rule.evaluate(candidate));
+      let passing_rule = this.evaluatables.find(rule => rule.evaluate(candidate));
       return passing_rule ? true : false;
     }
 
