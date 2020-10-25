@@ -2,7 +2,7 @@
  * This file parses the json representation of rules into rule objects
  */
 
-const RuleSet = require("./rule_set");
+const Conjunction = require("./conjunction");
 const Comparison = require("./comparison");
 
 class RulesParser {

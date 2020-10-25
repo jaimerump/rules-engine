@@ -3,6 +3,6 @@
  */
 module.exports = {
   Comparison: require("./comparison"),
-  RuleSet: require("./rule_set"),
+  Conjunction: require("./conjunction"),
   RulesParser: require("./rules_parser")
 };
